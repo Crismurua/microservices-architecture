@@ -2,6 +2,7 @@ const Character = require("../data");
 const { response } = require("../utils");
 
 module.exports = async (req, res) => {
-  const character = await Character.delete();
+  const { id } = req.params;
+  const character = await Character.delete(id);
   response(res, 200, { message: "Character deleted" });
 };
