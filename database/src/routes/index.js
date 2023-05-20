@@ -33,7 +33,7 @@ router.put("/:model/:id", validateModel, async (req, res) => {
 router.delete("/:model/:id", validateModel, async (req, res) => {
   const { model, id } = req.params;
   await store[model].delete(id);
-  res.status(204).send(`Character ${id} successfully deleted`);
+  res.status(204).send(`${model} ${id} successfully deleted`);
 });
 
 module.exports = router;
