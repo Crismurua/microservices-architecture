@@ -23,4 +23,17 @@ router.post("/:model", validateModel, async (req, res) => {
   res.status(201).send(response);
 });
 
+router.put("/:model/:id", validateModel, async (req, res) => {
+  const { model, id } = req.params;
+  const { data } = req.body;
+  const response = await store[model].upsert(id, data);
+  res.status(204).send(response);
+});
+
+router.delete("/:model/:id", validateModel, async (req, res) => {
+  const { model, id } = req.params;
+  await store[model].delete(id);
+  res.status(204).send(`Character ${id} successfully deleted`);
+});
+
 module.exports = router;
