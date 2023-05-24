@@ -18,15 +18,13 @@ router.get("/:model/:id", validateModel, async (req, res) => {
 
 router.post("/:model", validateModel, async (req, res) => {
   const { model } = req.params;
-  const { data } = req.body;
-  const response = await store[model].insert(data);
+  const response = await store[model].insert(req.body);
   res.status(201).send(response);
 });
 
 router.put("/:model/:id", validateModel, async (req, res) => {
   const { model, id } = req.params;
-  const { data } = req.body;
-  const response = await store[model].upsert(id, data);
+  const response = await store[model].upsert(id, req.body);
   res.status(204).send(response);
 });
 
