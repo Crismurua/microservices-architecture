@@ -1,37 +1,18 @@
 const { Router } = require("express");
 const store = require("../storage");
 const { validateModel } = require("../middlewares");
+const controllers = require("../controllers");
 
 const router = Router();
 
-router.get("/:model", validateModel, async (req, res) => {
-  const { model } = req.params;
-  const response = await store[model].list();
-  res.status(200).send(response);
-});
+router.get("/:model", validateModel, controllers.getModels);
 
-router.get("/:model/:id", validateModel, async (req, res) => {
-  const { model, id } = req.params;
-  const response = await store[model].get(id);
-  res.status(200).send(response);
-});
+router.get("/:model/:id", validateModel, controllers.findModel);
 
-router.post("/:model", validateModel, async (req, res) => {
-  const { model } = req.params;
-  const response = await store[model].insert(req.body);
-  res.status(201).send(response);
-});
+router.post("/:model", validateModel, controllers.createModel);
 
-router.put("/:model/:id", validateModel, async (req, res) => {
-  const { model, id } = req.params;
-  const response = await store[model].upsert(id, req.body);
-  res.status(204).send(response);
-});
+router.put("/:model/:id", validateModel, controllers.updateModel);
 
-router.delete("/:model/:id", validateModel, async (req, res) => {
-  const { model, id } = req.params;
-  await store[model].delete(id);
-  res.status(204).send(`${model} ${id} successfully deleted`);
-});
+router.delete("/:model/:id", validateModel, controllers.deleteModel);
 
 module.exports = router;
